@@ -1,5 +1,7 @@
 ### 设备网络 SDK 使用手册：CHM → HTML → Markdown 转换工具
 
+![image-20251127112605644](assert/image-20251127112605644.png)
+
 #### 一、环境准备
 
 - 系统：Windows（需要系统自带的 `hh.exe`）
