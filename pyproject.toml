@@ -1,0 +1,17 @@
+[project]
+name = "device-sdk-chm-to-md"
+version = "0.1.0"
+description = "将设备网络SDK使用手册 CHM 解包后的 HTML 批量转换为 Markdown"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "beautifulsoup4>=4.14.2",
+    "chardet>=5.2.0",
+    "lxml>=6.0.2",
+    "markdownify>=1.2.2",
+]
+
+[tool.uv]
+package = true
+
+
