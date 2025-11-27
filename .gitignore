@@ -2,3 +2,4 @@
 html/
 *.chm
 device_sdk_chm_to_md.egg-info/
+out_html
