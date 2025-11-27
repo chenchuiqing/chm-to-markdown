@@ -52,9 +52,16 @@ uv run python html_to_md.py --root out_html --subdir 结构体
 uv run python html_to_md.py --root out_html --subdir "00新手指南"
 ```
 
-转换完成后，会在相同目录结构下生成对应的 `.md` 文件，例如：
+4. 将 Markdown 输出到单独目录（与 HTML 分开存放），例如输出到 `out_md`：
 
-- `out_html\结构体\国家和地区编号.html` → `out_html\结构体\国家和地区编号.md`
+```bash
+uv run python html_to_md.py --root out_html --out-root out_md
+uv run python html_to_md.py --root out_html --out-root out_md --subdir 结构体
+```
+
+转换完成后，会在指定输出目录下，以相同目录结构生成对应的 `.md` 文件，例如：
+
+- `out_html\结构体\国家和地区编号.html` → `out_md\结构体\国家和地区编号.md`
 
 #### 四、注意事项
 

@@ -91,9 +91,9 @@ def html_to_markdown(html: str) -> str:
     return postprocess_markdown(markdown)
 
 
-def process_file(src_path: Path, html_root: Path) -> None:
+def process_file(src_path: Path, html_root: Path, md_root: Path) -> None:
     rel = src_path.relative_to(html_root)
-    dst_path = html_root / rel.with_suffix(".md")
+    dst_path = md_root / rel.with_suffix(".md")
 
     # 确保输出目录存在
     dst_path.parent.mkdir(parents=True, exist_ok=True)
@@ -133,7 +133,8 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         description=(
             "将 CHM 解包后的 HTML 批量转换为 Markdown。\n"
             "示例：uv run python html_to_md.py --root html\n"
-            "      uv run python html_to_md.py --root out_html --subdir 结构体"
+            "      uv run python html_to_md.py --root out_html --subdir 结构体\n"
+            "      uv run python html_to_md.py --root out_html --out-root out_md"
         )
     )
     parser.add_argument(
@@ -148,6 +149,12 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         default=None,
         help="只转换指定子目录（相对 root 的路径，例如: 结构体 或 00新手指南）",
     )
+    parser.add_argument(
+        "--out-root",
+        type=str,
+        default=None,
+        help="Markdown 输出根目录（默认与 HTML 根目录相同，例如: md 或 out_md）",
+    )
     return parser.parse_args(argv)
 
 
@@ -155,6 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv or sys.argv[1:])
 
     html_root = Path(args.root).resolve()
+    md_root = Path(args.out_root).resolve() if getattr(args, "out_root", None) else html_root
     subdir = Path(args.subdir) if args.subdir else None
 
     if not html_root.exists():
@@ -172,7 +180,7 @@ def main(argv: list[str] | None = None) -> int:
 
     for path in sorted(html_files):
         try:
-            process_file(path, html_root)
+            process_file(path, html_root, md_root)
         except Exception as e:  # noqa: BLE001
             print(f"处理失败: {path}: {e}", file=sys.stderr)
 
